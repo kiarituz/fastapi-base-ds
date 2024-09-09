@@ -63,3 +63,8 @@ class Mascota(MascotaBase):
     nombre_tutor: str
 
     model_config = {"from_attributes": True}
+
+
+class MascotaDelete(MascotaBase):
+    id: int
+    tutor_id: int

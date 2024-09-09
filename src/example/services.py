@@ -7,7 +7,7 @@ from src.example import schemas, exceptions
 
 
 def crear_persona(db: Session, persona: schemas.PersonaCreate) -> Persona:
-    return Persona.create(db, nombre=persona.nombre, email=persona.email)
+    return Persona.create(db, persona)
 
 
 def listar_personas(db: Session) -> List[Persona]:
@@ -25,7 +25,7 @@ def modificar_persona(
     db: Session, persona_id: int, persona: schemas.PersonaUpdate
 ) -> Persona:
     db_persona = leer_persona(db, persona_id)
-    return db_persona.update(db, nombre=persona.nombre, email=persona.email)
+    return db_persona.update(db, persona)
 
 
 def eliminar_persona(db: Session, persona_id: int) -> Persona:
@@ -43,7 +43,6 @@ def crear_mascota(db: Session, mascota: schemas.MascotaCreate) -> Mascota:
     return Mascota.create(db, mascota)
 
 
-
 def listar_mascotas(db: Session) -> List[Mascota]:
     return Mascota.get_all(db)
 
@@ -59,10 +58,10 @@ def modificar_mascota(
     db: Session, mascota_id: int, mascota: schemas.MascotaUpdate
 ) -> Mascota:
     db_mascota = leer_mascota(db, mascota_id)
-    return db_mascota.update(db, nombre=mascota.nombre, tipo=mascota.tipo)
+    return db_mascota.update(db, mascota)
 
 
-def eliminar_mascota(db: Session, mascota_id: int) -> Mascota:
-    db_mascota = leer_mascota(mascota_id)
+def eliminar_mascota(db: Session, mascota_id: int) -> schemas.MascotaDelete:
+    db_mascota = leer_mascota(db, mascota_id)
     db_mascota.delete(db)
     return db_mascota

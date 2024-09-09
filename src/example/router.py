@@ -60,6 +60,6 @@ def update_mascota(
     return services.modificar_mascota(db, mascota_id, mascota)
 
 
-@router.delete("/mascotas/{mascota_id}", response_model=schemas.Mascota)
+@router.delete("/mascotas/{mascota_id}", response_model=schemas.MascotaDelete)
 def delete_mascota(mascota_id: int, db: Session = Depends(get_db)):
     return services.eliminar_mascota(db, mascota_id)

@@ -3,10 +3,10 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from enum import auto, StrEnum
 from datetime import datetime, UTC
-from src.models import BaseModel
+from src.models import ModeloBase
 
 
-class Persona(BaseModel):
+class Persona(ModeloBase):
     __tablename__ = "personas"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
@@ -29,7 +29,7 @@ class TipoMascota(StrEnum):
     PEZ = auto()
 
 
-class Mascota(BaseModel):
+class Mascota(ModeloBase):
     __tablename__ = "mascotas"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
