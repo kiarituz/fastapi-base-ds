@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -12,6 +12,8 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Dependency
 def get_db():
     db = SessionLocal()
+    # Para usar restricciones de FK en SQLite, debemos habilitar la siguiente opción:
+    db.execute(text("PRAGMA foreign_keys = ON"))
     try:
         yield db
     finally:

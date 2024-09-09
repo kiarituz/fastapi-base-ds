@@ -3,7 +3,7 @@ import pytest
 from dotenv import load_dotenv
 from fastapi.testclient import TestClient
 from typing import Generator
-from sqlalchemy import StaticPool, create_engine
+from sqlalchemy import StaticPool, create_engine, text
 from sqlalchemy.orm import sessionmaker, Session
 from src.main import app
 from src.database import get_db
@@ -27,6 +27,8 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 def override_get_db():
     # utilizaremos esta funcion para "pisar" la que definimos en src/database.py.
     db = TestingSessionLocal()
+    # Para usar restricciones de FK en SQLite, debemos habilitar la siguiente opción:
+    db.execute(text("PRAGMA foreign_keys = ON"))
     try:
         print("Using test DB!")
         yield db
@@ -42,6 +44,8 @@ def session() -> Generator[Session, None, None]:
     ModeloBase.metadata.create_all(bind=engine)
 
     db = TestingSessionLocal()
+    # Para usar restricciones de FK en SQLite, debemos habilitar la siguiente opción:
+    db.execute(text("PRAGMA foreign_keys = ON"))
 
     # aqui podemos crear instancias de objetos para hacer tests
     # haciendo uso de las funciones "create_<clase>" de services y los schemas <Clase>Create.
