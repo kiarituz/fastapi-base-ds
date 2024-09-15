@@ -8,6 +8,7 @@ from src.models import ModeloBase
 
 # importamos los routers desde nuestros modulos
 from src.example.router import router as example_router
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
@@ -22,6 +23,19 @@ async def db_creation_lifespan(app: FastAPI):
 
 
 app = FastAPI(root_path=ROOT_PATH, lifespan=db_creation_lifespan)
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # asociamos los routers a nuestra app
 app.include_router(example_router)
