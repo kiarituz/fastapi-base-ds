@@ -1,19 +1,15 @@
 import pytest
-from typing import Union
 from sqlalchemy.orm import Session
-from fastapi.testclient import TestClient
-from fastapi import status
-from tests.database import app, session
-from src.example import exceptions
-from src.example.services import (
+from tests.database import session
+from src.personas import exceptions
+from src.personas.services import (
     listar_personas,
-    listar_mascotas,
     crear_persona,
     modificar_persona,
     leer_persona,
     eliminar_persona
 )
-from src.example.schemas import PersonaCreate, PersonaUpdate
+from src.personas.schemas import PersonaCreate, PersonaUpdate
 
 
 def test_crear_persona(session: Session) -> None:
@@ -59,8 +55,3 @@ def test_eliminar_persona(session: Session) -> None:
 def test_listar_personas(session: Session) -> None:
     personas = listar_personas(session)
     assert len(personas) == 2
-
-
-def test_listar_mascotas(session: Session) -> None:
-    mascotas = listar_mascotas(session)
-    assert len(mascotas) == 3

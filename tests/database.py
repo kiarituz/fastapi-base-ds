@@ -1,16 +1,17 @@
 import os
 import pytest
 from dotenv import load_dotenv
-from fastapi.testclient import TestClient
 from typing import Generator
 from sqlalchemy import StaticPool, create_engine, text
 from sqlalchemy.orm import sessionmaker, Session
 from src.main import app
 from src.database import get_db
 from src.models import ModeloBase
-from src.example.services import crear_persona, crear_mascota
-from src.example.schemas import PersonaCreate, MascotaCreate
-from src.example.models import TipoMascota
+from src.personas.services import crear_persona
+from src.mascotas.services import crear_mascota
+from src.personas.schemas import PersonaCreate
+from src.mascotas.schemas import MascotaCreate
+from src.mascotas.models import TipoMascota
 
 load_dotenv()
 
@@ -57,16 +58,16 @@ def session() -> Generator[Session, None, None]:
     mascota_2 = crear_mascota(db, MascotaCreate(nombre="Felipe", tipo=TipoMascota.PERRO, tutor_id=persona_1.id))
     mascota_3 = crear_mascota(db, MascotaCreate(nombre="Coco", tipo=TipoMascota.COBAYO, tutor_id=persona_2.id))
 
-    # db.add_all(
-    #     [
-    #         persona_1,
-    #         persona_2,
-    #         mascota_1,
-    #         mascota_2,
-    #         mascota_3
-    #     ]
-    # )
-    # db.commit()
+    db.add_all(
+        [
+            persona_1,
+            persona_2,
+            mascota_1,
+            mascota_2,
+            mascota_3
+        ]
+    )
+    db.commit()
 
     yield db
 
