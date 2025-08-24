@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import List
-#from src import Pedido
+from .. import Pedido
 
 # Los siguientes schemas contienen atributos sin muchas restricciones de tipo.
 # Podemos crear atributos con ciertas reglas mediante el uso de un "Field" adecuado.
@@ -22,7 +22,7 @@ class ClienteUpdate(ClienteBase):
 
 class Cliente(ClienteBase):
     id: int
-    #pedidos: List[Pedido]
+    pedidos: List[Pedido]
 
     # from_atributes=True permite que Pydantic trabaje con modelos SQLAlchemy
     # más info.: https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict.from_attributes
