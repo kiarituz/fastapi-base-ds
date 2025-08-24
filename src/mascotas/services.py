@@ -4,9 +4,7 @@ from sqlalchemy.orm import Session
 from src.mascotas.models import Mascota
 from src.mascotas import schemas, exceptions
 
-
 # operaciones CRUD para Mascota
-
 
 def crear_mascota(db: Session, mascota: schemas.MascotaCreate) -> schemas.Mascota:
     _mascota = Mascota(**mascota.model_dump())
